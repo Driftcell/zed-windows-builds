@@ -42,10 +42,6 @@ jobs:
             echo "❌ FAIL: Vulkan artifact not found"
           fi
 
-          if [ ! -f "artifacts/zed-release-opengl/zed.exe" ]; then
-            echo "❌ FAIL: OpenGL artifact not found"
-          fi
-
       - name: Create release directories and zip
         run: |
           chmod +x scripts/prepare-release.sh
