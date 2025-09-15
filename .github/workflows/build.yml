@@ -27,14 +27,11 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        backend: [vulkan, opengl]
+        backend: [vulkan]
         include:
           - backend: vulkan
             artifact_name: zed-release
             rustflags: ""
-          - backend: opengl
-            artifact_name: zed-release-opengl
-            rustflags: "--cfg gles"
       fail-fast: false
 
     steps:
