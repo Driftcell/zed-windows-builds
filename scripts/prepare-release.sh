@@ -18,6 +18,13 @@ if [ -f "$ARTIFACTS_DIR/zed-release/zed.exe" ]; then
     zip -j "$RELEASE_DIR/zed.zip" -9 "$RELEASE_DIR/zed.exe"
 fi
 
+# Check if remote server build exists
+if [ -f "$ARTIFACTS_DIR/remote-server-release/zed-remote-server-windows.exe" ]; then
+    echo "Found remote server build, adding to release..."
+    mv "$ARTIFACTS_DIR/remote-server-release/zed-remote-server-windows.exe" "$RELEASE_DIR/zed-remote-server-windows.exe"
+    zip -j "$RELEASE_DIR/zed-remote-server-windows.zip" -9 "$RELEASE_DIR/zed-remote-server-windows.exe"
+fi
+
 # Generate checksums for existing files in release folder
 cd "$RELEASE_DIR"
 if ls * >/dev/null 2>&1; then
