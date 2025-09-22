@@ -30,6 +30,11 @@ create_opengl_artifact() {
     echo "fake opengl executable" > artifacts/zed-release-opengl/zed.exe
 }
 
+create_remote_server_artifact() {
+    mkdir -p artifacts/remote-server-release
+    echo "fake remote server binary" > artifacts/remote-server-release/zed-remote-server-linux
+}
+
 verify_file_exists() {
     local file="$1"
     if [ ! -f "$file" ]; then
@@ -69,16 +74,16 @@ run_test() {
     fi
 }
 
-# Test 1: Both Vulkan and OpenGL builds exist
+# Test 1: Both Vulkan and Remote Server builds exist
 setup_test "Both builds exist"
 create_vulkan_artifact
-create_opengl_artifact
+create_remote_server_artifact
 run_test "success"
-verify_file_count 5  # zed.exe, zed.zip, zed-opengl.exe, zed-opengl.zip, sha256sums.txt
+verify_file_count 5  # zed.exe, zed.zip, zed-remote-server-linux, zed-remote-server-linux.zip, sha256sums.txt
 verify_file_exists "release/zed.exe"
 verify_file_exists "release/zed.zip"
-verify_file_exists "release/zed-opengl.exe"
-verify_file_exists "release/zed-opengl.zip"
+verify_file_exists "release/zed-remote-server-linux"
+verify_file_exists "release/zed-remote-server-linux.zip"
 verify_file_exists "release/sha256sums.txt"
 
 # Test 2: Only Vulkan build exists
@@ -90,13 +95,13 @@ verify_file_exists "release/zed.exe"
 verify_file_exists "release/zed.zip"
 verify_file_exists "release/sha256sums.txt"
 
-# Test 3: Only OpenGL build exists
-setup_test "Only OpenGL build exists"
-create_opengl_artifact
+# Test 3: Only Remote Server build exists
+setup_test "Only Remote Server build exists"
+create_remote_server_artifact
 run_test "success"
-verify_file_count 3  # zed-opengl.exe, zed-opengl.zip, sha256sums.txt
-verify_file_exists "release/zed-opengl.exe"
-verify_file_exists "release/zed-opengl.zip"
+verify_file_count 3  # zed-remote-server-linux, zed-remote-server-linux.zip, sha256sums.txt
+verify_file_exists "release/zed-remote-server-linux"
+verify_file_exists "release/zed-remote-server-linux.zip"
 verify_file_exists "release/sha256sums.txt"
 
 # Test 4: No builds exist
@@ -113,7 +118,7 @@ echo "✅ No release files created when no builds exist"
 # Test 5: Verify checksums are correct
 setup_test "Checksum verification"
 create_vulkan_artifact
-create_opengl_artifact
+create_remote_server_artifact
 run_test "success"
 
 # Verify checksums

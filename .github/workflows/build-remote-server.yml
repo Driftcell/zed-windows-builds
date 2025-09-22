@@ -1,0 +1,68 @@
+name: Build Remote Server
+
+on:
+  workflow_call:
+    inputs:
+      repository:
+        description: Repository to clone and build
+        type: string
+        default: zed-industries/zed
+      ref:
+        description: Branch/tag/ref to build
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      repository:
+        description: Repository to clone and build
+        type: string
+        default: zed-industries/zed
+      ref:
+        description: Branch/tag/ref to build
+        type: string
+        default: main
+
+jobs:
+  build-remote-server:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout self
+        uses: actions/checkout@v4
+
+      - name: Install Rust & build tools
+        run: |
+          # Install Rust
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source $HOME/.cargo/env
+          
+          # Install build tools
+          sudo apt update
+          sudo apt install -y build-essential clang cmake
+
+      - name: Checkout Zed
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repository }}
+          ref: ${{ inputs.ref }}
+          path: zed
+
+      - name: Build remote server
+        working-directory: zed
+        env:
+          RUSTFLAGS: "-C linker=clang"
+        run: |
+          source $HOME/.cargo/env
+          cargo build -p remote_server --release
+
+      - name: Prepare remote server binary
+        run: |
+          mkdir -p remote-server-release
+          cp zed/target/release/remote_server remote-server-release/zed-remote-server-linux
+          chmod +x remote-server-release/zed-remote-server-linux
+
+      - name: Archive remote server build
+        uses: actions/upload-artifact@v4
+        with:
+          name: remote-server-release
+          path: remote-server-release/zed-remote-server-linux

@@ -38,7 +38,7 @@ jobs:
   trigger_build:
     name: Build
     needs: find_latest_commit
-    uses: ./.github/workflows/build.yml
+    uses: ./.github/workflows/build-all.yml
     with:
       ref: ${{ needs.find_latest_commit.outputs.build_ref }}
 

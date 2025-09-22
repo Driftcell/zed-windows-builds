@@ -1,0 +1,38 @@
+name: Build All
+
+on:
+  workflow_call:
+    inputs:
+      repository:
+        description: Repository to clone and build
+        type: string
+        default: zed-industries/zed
+      ref:
+        description: Branch/tag/ref to build
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      repository:
+        description: Repository to clone and build
+        type: string
+        default: zed-industries/zed
+      ref:
+        description: Branch/tag/ref to build
+        type: string
+        default: main
+
+jobs:
+  build-windows:
+    name: Build Windows Zed
+    uses: ./.github/workflows/build.yml
+    with:
+      repository: ${{ inputs.repository }}
+      ref: ${{ inputs.ref }}
+
+  build-remote-server:
+    name: Build Linux Remote Server
+    uses: ./.github/workflows/build-remote-server.yml
+    with:
+      repository: ${{ inputs.repository }}
+      ref: ${{ inputs.ref }}

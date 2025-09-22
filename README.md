@@ -1,4 +1,4 @@
-# Unofficial builds of Zed for Windows
+# Unofficial builds of Zed for Windows & Remote Server
 
 [![Test Scripts](https://github.com/deevus/zed-windows-builds/actions/workflows/test.yml/badge.svg)](https://github.com/deevus/zed-windows-builds/actions/workflows/test.yml)
 [![Test Integration](https://github.com/deevus/zed-windows-builds/actions/workflows/test-integration.yml/badge.svg)](https://github.com/deevus/zed-windows-builds/actions/workflows/test-integration.yml)
@@ -7,7 +7,9 @@
 
 **NOTE: This is not a support channel for Zed on Windows.**
 
-These builds are for those who want to live on the bleeding edge or just want to test Zed out on Windows. 
+This repository provides automated builds for:
+- **Zed editor for Windows** (builds are for those who want to live on the bleeding edge or just want to test Zed out on Windows)
+- **Zed remote server for Linux** (for remote development scenarios)
 
 Any issues with the Windows build should go through official channels, as this repository does not concern itself with the source code of Zed or issues found therein. 
 
@@ -46,6 +48,26 @@ scoop install extras/zed-opengl
 scoop bucket add versions
 scoop install versions/zed-opengl-nightly
 ```
+
+## Remote Server for Linux
+
+Each release also includes a Linux build of the Zed remote server (`zed-remote-server-linux`) for remote development scenarios. 
+
+### Manual Installation
+
+Download the `zed-remote-server-linux` binary from the [releases page](../../releases) and install it:
+
+```bash
+# Download and install to standard path
+mkdir -p ~/.zed_server
+wget https://github.com/Driftcell/zed-windows-builds/releases/latest/download/zed-remote-server-linux -O ~/.zed_server/zed-remote-server-linux
+chmod +x ~/.zed_server/zed-remote-server-linux
+```
+
+The remote server follows the build steps from the official Zed documentation:
+1. Install Rust & build tools (Ubuntu/Debian)
+2. Clone Zed & build remote server with `cargo build -p remote_server --release`
+3. Package binary and upload to release artifacts
 
 ### For Windows 10 users
 
