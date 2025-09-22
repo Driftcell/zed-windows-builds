@@ -9,7 +9,7 @@
 
 This repository provides automated builds for:
 - **Zed editor for Windows** (builds are for those who want to live on the bleeding edge or just want to test Zed out on Windows)
-- **Zed remote server for Linux** (for remote development scenarios)
+- **Zed remote server for Windows** (for remote development scenarios)
 
 Any issues with the Windows build should go through official channels, as this repository does not concern itself with the source code of Zed or issues found therein. 
 
@@ -49,24 +49,30 @@ scoop bucket add versions
 scoop install versions/zed-opengl-nightly
 ```
 
-## Remote Server for Linux
+## Remote Server for Windows
 
-Each release also includes a Linux build of the Zed remote server (`zed-remote-server-linux`) for remote development scenarios. 
+Each release also includes a Windows build of the Zed remote server (`zed-remote-server-windows.exe`) for remote development scenarios. 
 
 ### Manual Installation
 
-Download the `zed-remote-server-linux` binary from the [releases page](../../releases) and install it:
+Download the `zed-remote-server-windows.exe` binary from the [releases page](../../releases) and install it:
 
-```bash
+```powershell
 # Download and install to standard path
-mkdir -p ~/.zed_server
-wget https://github.com/Driftcell/zed-windows-builds/releases/latest/download/zed-remote-server-linux -O ~/.zed_server/zed-remote-server-linux
-chmod +x ~/.zed_server/zed-remote-server-linux
+mkdir ~/.zed_server -Force
+Invoke-WebRequest -Uri "https://github.com/Driftcell/zed-windows-builds/releases/latest/download/zed-remote-server-windows.exe" -OutFile "$env:USERPROFILE\.zed_server\zed-remote-server-windows.exe"
 ```
 
-The remote server follows the build steps from the official Zed documentation:
-1. Install Rust & build tools (Ubuntu/Debian)
-2. Clone Zed & build remote server with `cargo build -p remote_server --release`
+Or using Windows command line:
+```cmd
+# Create directory and download
+mkdir "%USERPROFILE%\.zed_server"
+curl -L "https://github.com/Driftcell/zed-windows-builds/releases/latest/download/zed-remote-server-windows.exe" -o "%USERPROFILE%\.zed_server\zed-remote-server-windows.exe"
+```
+
+The remote server is built using the same Windows build environment as the main Zed editor:
+1. Windows latest with Rust nightly toolchain
+2. Build remote server with `cargo build -p remote_server --release`
 3. Package binary and upload to release artifacts
 
 ### For Windows 10 users

@@ -32,7 +32,7 @@ create_opengl_artifact() {
 
 create_remote_server_artifact() {
     mkdir -p artifacts/remote-server-release
-    echo "fake remote server binary" > artifacts/remote-server-release/zed-remote-server-linux
+    echo "fake remote server binary" > artifacts/remote-server-release/zed-remote-server-windows.exe
 }
 
 verify_file_exists() {
@@ -79,11 +79,11 @@ setup_test "Both builds exist"
 create_vulkan_artifact
 create_remote_server_artifact
 run_test "success"
-verify_file_count 5  # zed.exe, zed.zip, zed-remote-server-linux, zed-remote-server-linux.zip, sha256sums.txt
+verify_file_count 5  # zed.exe, zed.zip, zed-remote-server-windows.exe, zed-remote-server-windows.zip, sha256sums.txt
 verify_file_exists "release/zed.exe"
 verify_file_exists "release/zed.zip"
-verify_file_exists "release/zed-remote-server-linux"
-verify_file_exists "release/zed-remote-server-linux.zip"
+verify_file_exists "release/zed-remote-server-windows.exe"
+verify_file_exists "release/zed-remote-server-windows.zip"
 verify_file_exists "release/sha256sums.txt"
 
 # Test 2: Only Vulkan build exists
@@ -99,9 +99,9 @@ verify_file_exists "release/sha256sums.txt"
 setup_test "Only Remote Server build exists"
 create_remote_server_artifact
 run_test "success"
-verify_file_count 3  # zed-remote-server-linux, zed-remote-server-linux.zip, sha256sums.txt
-verify_file_exists "release/zed-remote-server-linux"
-verify_file_exists "release/zed-remote-server-linux.zip"
+verify_file_count 3  # zed-remote-server-windows.exe, zed-remote-server-windows.zip, sha256sums.txt
+verify_file_exists "release/zed-remote-server-windows.exe"
+verify_file_exists "release/zed-remote-server-windows.zip"
 verify_file_exists "release/sha256sums.txt"
 
 # Test 4: No builds exist

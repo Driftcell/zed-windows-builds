@@ -46,11 +46,11 @@ Main script that prepares release files from build artifacts. Handles partial bu
 
 **Input:**
 - `artifacts/zed-release/zed.exe` (Windows Vulkan build)
-- `artifacts/remote-server-release/zed-remote-server-linux` (Linux remote server build)
+- `artifacts/remote-server-release/zed-remote-server-windows.exe` (Windows remote server build)
 
 **Output:**
 - `release/zed.exe` and `release/zed.zip` (if Windows Vulkan build exists)
-- `release/zed-remote-server-linux` and `release/zed-remote-server-linux.zip` (if Linux remote server build exists)
+- `release/zed-remote-server-windows.exe` and `release/zed-remote-server-windows.zip` (if Windows remote server build exists)
 - `release/sha256sums.txt` (checksums for all files)
 
 **Requirements:**
@@ -66,9 +66,9 @@ Main script that prepares release files from build artifacts. Handles partial bu
 Comprehensive test suite for `prepare-release.sh` with full scenario coverage.
 
 **Test Scenarios:**
-- ✅ Both Windows and Remote Server builds present (5 files expected)
+- ✅ Both Windows Vulkan and Windows Remote Server builds present (5 files expected)
 - ✅ Only Windows Vulkan build present (3 files expected)
-- ✅ Only Remote Server build present (3 files expected)
+- ✅ Only Windows Remote Server build present (3 files expected)
 - ✅ Only OpenGL build present (3 files expected)
 - ❌ No builds present (should fail with clear error)
 - ✅ Checksum validation (verify SHA256 accuracy)

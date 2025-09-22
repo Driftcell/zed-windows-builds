@@ -35,7 +35,7 @@ jobs:
       - name: Verify downloaded artifacts
         run: |
           echo "Downloaded artifacts:"
-          find artifacts -type f -name "*.exe" -o -name "zed-remote-server-linux" -exec ls -la {} \;
+          find artifacts -type f -name "*.exe" -exec ls -la {} \;
 
           # Check if Vulkan build exists
           if [ ! -f "artifacts/zed-release/zed.exe" ]; then
@@ -43,7 +43,7 @@ jobs:
           fi
 
           # Check if remote server build exists
-          if [ ! -f "artifacts/remote-server-release/zed-remote-server-linux" ]; then
+          if [ ! -f "artifacts/remote-server-release/zed-remote-server-windows.exe" ]; then
             echo "❌ Warning: Remote server artifact not found"
           fi
 
